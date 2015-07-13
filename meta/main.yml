@@ -1,0 +1,32 @@
+---
+galaxy_info:
+  author: Christophe Robin
+  description: Install python and pip packages
+  company: Wizcorp Inc
+  license: MIT
+  min_ansible_version: 1.2
+  platforms:
+  - name: EL
+    versions:
+    - 6
+    - 7
+  - name: Ubuntu
+    versions:
+    - trusty
+    - utopic
+    - vivid
+  - name: Debian
+    versions:
+    - jessie
+    - wheezy
+  categories:
+  - development
+  - packaging
+  - system
+  - web
+dependencies:
+  - role: aeriscloud.repos
+    repositories:
+      centos6: ['epel']
+      centos7: ['epel']
+

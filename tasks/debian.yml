@@ -1,0 +1,21 @@
+---
+- name: "Install Python"
+  apt: name={{item}} state=latest
+  # python-virtualenv does not exist on wheezy
+  when: item != 'python-virtualenv' or ansible_distribution_major_version > 7
+  with_items:
+  - python
+  - python-dev
+  - python-setuptools
+  - python-pip
+  - python-virtualenv
+  tags:
+  - python
+  - packages
+
+- name: "Install virtualenv (wheezy)"
+  easy_install: name=virtualenv
+  when: ansible_distribution_major_version == 7
+  tags:
+  - python
+  - packages

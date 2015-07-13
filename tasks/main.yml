@@ -1,0 +1,37 @@
+---
+# Debian uses "python" for python2, so ignore the version number for python2
+- include: debian.yml
+  when: ansible_distribution == 'Debian'
+
+- include: centos.yml
+  when: ansible_distribution == 'CentOS'
+
+- include: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: "Install python libraries | requirements.txt"
+  pip: requirements={{python_requirements}}
+  when: python_requirements != ""
+  tags:
+  - python
+  - packages
+
+- name: "Install python libraries | Latest packages"
+  pip: |
+    name={{item.name|default(item)}}
+    state=latest
+  when: "'version' not in item"
+  with_items: python_packages
+  tags:
+  - python
+  - packages
+
+- name: "Install python libraries | Versioned packages"
+  pip: |
+    name="{{item.name}}"
+    version="{{item.version}}"
+  when: "'version' in item"
+  with_items: python_packages
+  tags:
+  - python
+  - packages

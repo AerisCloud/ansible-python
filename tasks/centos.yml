@@ -1,0 +1,18 @@
+---
+- name: "Install Python"
+  yum: name={{item}} state=latest enablerepo=epel
+  with_items:
+  - python
+  - python-setuptools
+  - python-virtualenv
+  - python-devel
+  tags:
+  - python
+  - packages
+
+- name: "Install pip"
+  easy_install: name=pip
+  tags:
+  - python
+  - packages
+
